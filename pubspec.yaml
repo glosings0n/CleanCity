@@ -1,0 +1,29 @@
+name: clean_city
+description: "A Students project."
+publish_to: 'none'
+version: 0.1.0
+
+environment:
+  sdk: ^3.5.3
+
+dependencies:
+  cached_network_image: ^3.4.1
+  cloud_firestore: ^5.4.4
+  firebase_core: ^3.6.0
+  flutter:
+    sdk: flutter
+  gap: ^3.0.1
+  google_fonts: ^6.2.1
+  hugeicons: ^0.0.7
+  smooth_page_indicator: ^1.2.0+3
+  url_launcher: ^6.3.1
+
+dev_dependencies:
+  flutter_lints: ^5.0.0
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - images/
