@@ -22,6 +22,29 @@ class DBServices {
     }
   }
 
+  static Future<bool> updateXNbr(String field, int data) async {
+    try {
+      await admin.doc(adminEmail).update({field: data});
+      return true;
+    } catch (e) {
+      debugPrint(e.toString());
+      return false;
+    }
+  }
+
+  static Future<List> getLengths() async {
+    try {
+      final length1 = await getClientsLength();
+      final length2 = await getEmployerLength();
+      final length3 = await getTeamsLength();
+      final length4 = await getDepotsLength();
+      return [length1, length2, length3, length4];
+    } catch (e) {
+      debugPrint(e.toString());
+      return [];
+    }
+  }
+
 //------------------CLIENT SECTION-------------------------------//
   static Future<int> getClientsLength() async {
     try {
@@ -48,10 +71,12 @@ class DBServices {
       "adresse": client.address,
       "montant": client.montant,
     });
+    final nbr = await getClientsLength();
+    if (nbr >= 0) await updateXNbr("nbr_clients", nbr);
   }
 
-  static Future<QuerySnapshot<Map<String, dynamic>>> getClients() async {
-    return await clients.get();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getClients() {
+    return clients.snapshots();
   }
 
   static Future<bool> updateClient(ClientModel client) async {
@@ -76,6 +101,8 @@ class DBServices {
   static Future<bool> deleteClient(String email) async {
     try {
       await clients.doc(email).delete();
+      final nbr = await getClientsLength();
+      if (nbr >= 0) await updateXNbr("nbr_clients", nbr);
       return true;
     } catch (e) {
       debugPrint(e.toString());
@@ -101,16 +128,18 @@ class DBServices {
     await admin
         .doc(adminEmail)
         .collection("depots")
-        .doc("depot-${id + 1}")
+        .doc("Dépôt-${id + 1}")
         .set({
-      "id": id + 1,
+      "id": "Dépôt-${id + 1}",
       "localisation": depot.localisation,
       "capacity": depot.capacity,
     });
+    final nbr = await getDepotsLength();
+    if (nbr >= 0) await updateXNbr("nbr_depots", nbr);
   }
 
-  static Future<QuerySnapshot<Map<String, dynamic>>> getDepots() async {
-    return await admin.doc(adminEmail).collection("depots").get();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getDepots() {
+    return admin.doc(adminEmail).collection("depots").snapshots();
   }
 
   static Future<bool> updateDepot(DepotModel depot) async {
@@ -126,13 +155,11 @@ class DBServices {
     }
   }
 
-  static Future<bool> deleteDepot(int id) async {
+  static Future<bool> deleteDepot(String depotID) async {
     try {
-      await admin
-          .doc(adminEmail)
-          .collection("depots")
-          .doc("depot-${id + 1}")
-          .delete();
+      await admin.doc(adminEmail).collection("depots").doc(depotID).delete();
+      final nbr = await getDepotsLength();
+      if (nbr >= 0) await updateXNbr("nbr_depots", nbr);
       return true;
     } catch (e) {
       debugPrint(e.toString());
@@ -141,6 +168,19 @@ class DBServices {
   }
 
 //------------------EMPLOYER SECTION-------------------------------//
+  static Future<int> getEmployerLength() async {
+    try {
+      final employers =
+          await admin.doc(adminEmail).collection("employers").get();
+      final employersLength = employers.docs.length;
+      debugPrint(employersLength.toString());
+      return employersLength;
+    } catch (e) {
+      debugPrint(e.toString());
+      return -1;
+    }
+  }
+
   static Future<void> addEmployers(EmployerModel employer) async {
     await admin
         .doc(adminEmail)
@@ -154,10 +194,12 @@ class DBServices {
       "num": employer.num,
       "team": employer.team,
     });
+    final nbr = await getEmployerLength();
+    if (nbr >= 0) await updateXNbr("nbr_employers", nbr);
   }
 
-  static Future<QuerySnapshot<Map<String, dynamic>>> getEmployers() async {
-    return await admin.doc(adminEmail).collection("employers").get();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getEmployers() {
+    return admin.doc(adminEmail).collection("employers").snapshots();
   }
 
   static Future<bool> updateEmployer(EmployerModel employer) async {
@@ -183,6 +225,8 @@ class DBServices {
   static Future<bool> deleteEmployer(String email) async {
     try {
       await admin.doc(adminEmail).collection("employers").doc(email).delete();
+      final nbr = await getEmployerLength();
+      if (nbr >= 0) await updateXNbr("nbr_employers", nbr);
       return true;
     } catch (e) {
       debugPrint(e.toString());
@@ -205,15 +249,30 @@ class DBServices {
 
   static Future<void> addTeam(TeamModel team) async {
     final id = await getTeamsLength();
-    await admin.doc(adminEmail).collection("teams").doc("team-${id + 1}").set({
-      "id": "team-${id + 1}",
-      "teamEmails": team.teamEmails,
+    await admin
+        .doc(adminEmail)
+        .collection("teams")
+        .doc("Equipe-${id + 1}")
+        .set({
+      "id": "Equipe-${id + 1}",
       "chiefEmail": team.chiefEmail,
+      "teamEmails": team.teamEmails,
+    });
+    final nbr = await getClientsLength();
+    if (nbr >= 0) await updateXNbr("nbr_teams", nbr);
+  }
+
+  static Future<void> addTeamMember(
+    String teamID,
+    List membersList,
+  ) async {
+    await admin.doc(adminEmail).collection("teams").doc(teamID).update({
+      "teamEmails": membersList,
     });
   }
 
-  static Future<QuerySnapshot<Map<String, dynamic>>> getTeams() async {
-    return await admin.doc(adminEmail).collection("teams").get();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getTeams() {
+    return admin.doc(adminEmail).collection("teams").snapshots();
   }
 
   static Future<bool> updateTeam(TeamModel team) async {
@@ -229,13 +288,11 @@ class DBServices {
     }
   }
 
-  static Future<bool> deleteTeam(int id) async {
+  static Future<bool> deleteTeam(String id) async {
     try {
-      await admin
-          .doc(adminEmail)
-          .collection("teams")
-          .doc("team-${id + 1}")
-          .delete();
+      await admin.doc(adminEmail).collection("teams").doc(id).delete();
+      final nbr = await getTeamsLength();
+      if (nbr >= 0) await updateXNbr("nbr_teams", nbr);
       return true;
     } catch (e) {
       debugPrint(e.toString());
@@ -262,7 +319,7 @@ class DBServices {
     await admin
         .doc(adminEmail)
         .collection("histories")
-        .doc("history-${id + 1}")
+        .doc("Historique-${id + 1}")
         .set({
       "id": id + 1,
       "teamID": history.teamID,
@@ -273,8 +330,8 @@ class DBServices {
     });
   }
 
-  static Future<QuerySnapshot<Map<String, dynamic>>> getHistories() async {
-    return await admin.doc(adminEmail).collection("histories").get();
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getHistories() {
+    return admin.doc(adminEmail).collection("histories").snapshots();
   }
 
   static Future<bool> updateHistory(HistoryModel history) async {
@@ -282,7 +339,7 @@ class DBServices {
       await admin
           .doc(adminEmail)
           .collection("histories")
-          .doc("history-${history.id + 1}")
+          .doc("Historique-${history.id + 1}")
           .update({
         "teamID": history.teamID,
         "depotID": history.depotID,
@@ -302,7 +359,7 @@ class DBServices {
       await admin
           .doc(adminEmail)
           .collection("histories")
-          .doc("history-${id + 1}")
+          .doc("Historique-${id + 1}")
           .delete();
       return true;
     } catch (e) {

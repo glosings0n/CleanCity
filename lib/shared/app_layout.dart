@@ -12,11 +12,11 @@ class AppAdaptability extends StatelessWidget {
   });
 
   static bool isMobile(BuildContext context) {
-    return MediaQuery.sizeOf(context).width < 640;
+    return MediaQuery.sizeOf(context).width < 540;
   }
 
   static bool isTablet(BuildContext context) {
-    return MediaQuery.sizeOf(context).width >= 640 &&
+    return MediaQuery.sizeOf(context).width >= 540 &&
         MediaQuery.sizeOf(context).width < 800;
   }
 

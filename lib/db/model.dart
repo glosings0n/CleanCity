@@ -95,12 +95,12 @@ class EmployerModel {
 }
 
 class DepotModel {
-  String id;
+  String? id;
   String localisation;
   String capacity;
 
   DepotModel({
-    required this.id,
+    this.id,
     required this.localisation,
     required this.capacity,
   });
@@ -113,19 +113,19 @@ class DepotModel {
 }
 
 class TeamModel {
-  String id;
-  List<String> teamEmails;
+  String? id;
   String chiefEmail;
+  List teamEmails;
 
   TeamModel({
-    required this.id,
-    required this.teamEmails,
+    this.id,
     required this.chiefEmail,
+    required this.teamEmails,
   });
 
   factory TeamModel.fromJson(json) => TeamModel(
         id: json['id'] as String,
-        teamEmails: json['teamEmails'] as List<String>,
+        teamEmails: json['teamEmails'],
         chiefEmail: json['chiefEmail'] as String,
       );
 }

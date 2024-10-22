@@ -24,7 +24,7 @@ Widget socialmediaView(
           icon: HugeIcons.strokeRoundedLinkedin02,
         ),
         SocialMediaIcon(
-          url: 'https://instagram.com/glosings0n',
+          url: 'https://www.instagram.com/_ysokit_',
           icon: HugeIcons.strokeRoundedInstagram,
         ),
         SocialMediaIcon(
@@ -32,7 +32,7 @@ Widget socialmediaView(
           icon: HugeIcons.strokeRoundedFacebook02,
         ),
         SocialMediaIcon(
-          url: 'https://github.com/glosings0n',
+          url: 'https://github.com/glosings0n/CleanCity',
           icon: HugeIcons.strokeRoundedGithub01,
         ),
       ],

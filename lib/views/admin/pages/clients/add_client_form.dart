@@ -5,18 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../db/db.dart';
-import '../shared.dart';
+import '../../../../db/db.dart';
+import '../../../../shared/shared.dart';
 
 class AddClientForm extends StatefulWidget {
   const AddClientForm({
     super.key,
     this.initialValues,
     this.forUpdate = false,
+    this.fromAdmin = false,
   });
 
-  final List<String?>? initialValues;
+  final List<String>? initialValues;
   final bool forUpdate;
+  final bool fromAdmin;
 
   @override
   State<AddClientForm> createState() => _AddClientFormState();
@@ -106,6 +108,13 @@ class _AddClientFormState extends State<AddClientForm> {
                                 : widget.initialValues![index],
                             enabled:
                                 widget.forUpdate && index == 4 ? false : true,
+                            onChanged: widget.initialValues == null
+                                ? null
+                                : (value) {
+                                    setState(() {
+                                      widget.initialValues![index] = value;
+                                    });
+                                  },
                             keyboardType: index == 3 || index == 7
                                 ? TextInputType.number
                                 : index == 5
@@ -141,22 +150,48 @@ class _AddClientFormState extends State<AddClientForm> {
                       if (_formKey.currentState!.validate()) {
                         try {
                           registeringStarted();
-                          await DBServices.addClient(
-                            ClientModel(
-                              nom: nomCtr.text.trim(),
-                              postnom: postnomCtr.text.trim(),
-                              prenom: prenomCtr.text.trim(),
-                              age: int.parse(ageCtr.text.trim()),
-                              email: emailCtr.text.trim(),
-                              num: int.parse(numCtr.text.trim()),
-                              address: adresseCtr.text.trim(),
-                              montant: int.parse(montantCtr.text.trim()),
-                            ),
-                          );
-                          myCustomSnackBar(
-                            context: context,
-                            text: "Abonnement réussi !",
-                          );
+                          if (widget.initialValues == null) {
+                            await DBServices.addClient(
+                              ClientModel(
+                                nom: nomCtr.text.trim(),
+                                postnom: postnomCtr.text.trim(),
+                                prenom: prenomCtr.text.trim(),
+                                age: int.parse(ageCtr.text.trim()),
+                                email: emailCtr.text.trim(),
+                                num: int.parse(numCtr.text.trim()),
+                                address: adresseCtr.text.trim(),
+                                montant: int.parse(montantCtr.text.trim()),
+                              ),
+                            );
+                            widget.fromAdmin
+                                ? myCustomSnackBar(
+                                    context: context,
+                                    text: "Client ajouté !",
+                                  )
+                                : myCustomSnackBar(
+                                    context: context,
+                                    text: "Abonnement réussi !",
+                                  );
+                            setState(() {});
+                          } else {
+                            await DBServices.updateClient(
+                              ClientModel(
+                                nom: widget.initialValues![0],
+                                postnom: widget.initialValues![1],
+                                prenom: widget.initialValues![2],
+                                age: int.parse(widget.initialValues![3]),
+                                email: widget.initialValues![4],
+                                num: int.parse(widget.initialValues![5]),
+                                address: widget.initialValues![6],
+                                montant: int.parse(widget.initialValues![7]),
+                              ),
+                            );
+                            myCustomSnackBar(
+                              context: context,
+                              text: "Abonnement mis en jour !",
+                            );
+                            setState(() {});
+                          }
                           Navigator.pop(context);
                           registeringStarted();
                         } catch (e) {
@@ -190,10 +225,12 @@ class PhoneAddClientForm extends StatefulWidget {
     super.key,
     this.initialValues,
     this.forUpdate = false,
+    this.fromAdmin = false,
   });
 
-  final List<String?>? initialValues;
+  final List<String>? initialValues;
   final bool forUpdate;
+  final bool fromAdmin;
 
   @override
   State<PhoneAddClientForm> createState() => _PhoneAddClientFormState();
@@ -272,12 +309,21 @@ class _PhoneAddClientFormState extends State<PhoneAddClientForm> {
                         Gap(20),
                         Expanded(
                           child: CustomTextField(
-                            controller: controllers[index],
+                            controller: widget.initialValues == null
+                                ? controllers[index]
+                                : null,
                             labelText: FormData.labels[index],
                             hintText: FormData.hints[index],
                             initialValue: widget.initialValues == null
                                 ? null
                                 : widget.initialValues![index],
+                            onChanged: widget.initialValues == null
+                                ? null
+                                : (value) {
+                                    setState(() {
+                                      widget.initialValues![index] = value;
+                                    });
+                                  },
                             enabled:
                                 widget.forUpdate && index == 4 ? false : true,
                             keyboardType: index == 3 || index == 7
@@ -315,22 +361,48 @@ class _PhoneAddClientFormState extends State<PhoneAddClientForm> {
                       if (_formKey.currentState!.validate()) {
                         try {
                           registeringStarted();
-                          await DBServices.addClient(
-                            ClientModel(
-                              nom: nomCtr.text.trim(),
-                              postnom: postnomCtr.text.trim(),
-                              prenom: prenomCtr.text.trim(),
-                              age: int.parse(ageCtr.text.trim()),
-                              email: emailCtr.text.trim(),
-                              num: int.parse(numCtr.text.trim()),
-                              address: adresseCtr.text.trim(),
-                              montant: int.parse(montantCtr.text.trim()),
-                            ),
-                          );
-                          myCustomSnackBar(
-                            context: context,
-                            text: "Abonnement réussi !",
-                          );
+                          if (widget.initialValues == null) {
+                            await DBServices.addClient(
+                              ClientModel(
+                                nom: nomCtr.text.trim(),
+                                postnom: postnomCtr.text.trim(),
+                                prenom: prenomCtr.text.trim(),
+                                age: int.parse(ageCtr.text.trim()),
+                                email: emailCtr.text.trim(),
+                                num: int.parse(numCtr.text.trim()),
+                                address: adresseCtr.text.trim(),
+                                montant: int.parse(montantCtr.text.trim()),
+                              ),
+                            );
+                            widget.fromAdmin
+                                ? myCustomSnackBar(
+                                    context: context,
+                                    text: "Client ajouté !",
+                                  )
+                                : myCustomSnackBar(
+                                    context: context,
+                                    text: "Abonnement réussi !",
+                                  );
+                            setState(() {});
+                          } else {
+                            await DBServices.updateClient(
+                              ClientModel(
+                                nom: widget.initialValues![0],
+                                postnom: widget.initialValues![1],
+                                prenom: widget.initialValues![2],
+                                age: int.parse(widget.initialValues![3]),
+                                email: widget.initialValues![4],
+                                num: int.parse(widget.initialValues![5]),
+                                address: widget.initialValues![6],
+                                montant: int.parse(widget.initialValues![7]),
+                              ),
+                            );
+                            myCustomSnackBar(
+                              context: context,
+                              text: "Abonnement mis en jour !",
+                            );
+                            setState(() {});
+                          }
                           Navigator.pop(context);
                           registeringStarted();
                         } catch (e) {
@@ -346,6 +418,7 @@ class _PhoneAddClientFormState extends State<PhoneAddClientForm> {
                     },
                     text: "Valider",
                   ),
+            const Gap(50),
           ],
         ),
       ),

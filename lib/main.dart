@@ -28,13 +28,14 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      initialRoute: '/clients',
+      initialRoute: '/',
       routes: {
         '/': (context) => const MainPageView(),
         '/admin': (context) => const AdminScreen(),
         '/clients': (context) => const ClientsList(),
         '/employers': (context) => const EmployersList(),
-        '/deposits': (context) => const DepositsList(),
+        '/equipes': (context) => const TeamsList(),
+        '/depots': (context) => const DepositsList(),
       },
     );
   }

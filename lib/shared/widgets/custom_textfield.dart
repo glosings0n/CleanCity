@@ -17,6 +17,7 @@ class CustomTextField extends StatelessWidget {
     this.enabled,
     this.isNotRequired = false,
     this.keyboardType = TextInputType.text,
+    this.onChanged,
   });
 
   final TextEditingController? controller;
@@ -27,10 +28,11 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final String? labelText;
   final String? initialValue;
-
   final int? maxLength;
   final int? maxLines;
   final TextInputType keyboardType;
+  final Function(String)? onChanged;
+
   @override
   Widget build(BuildContext context) {
     final width = MediaQuery.sizeOf(context).width;
@@ -43,6 +45,7 @@ class CustomTextField extends StatelessWidget {
       onTapOutside: (event) {
         FocusScope.of(context).requestFocus(FocusNode());
       },
+      onChanged: onChanged,
       cursorColor: Colors.black,
       cursorErrorColor: const Color(0xFFC1251A),
       style: GoogleFonts.outfit(
