@@ -36,68 +36,66 @@ class _PhoneViewState extends State<PhoneView> {
                   textAlign: TextAlign.center,
                 ),
                 const Gap(10),
-                Expanded(
-                  child: SizedBox(
-                    height: 450,
-                    child: PageView.builder(
-                      itemCount: MainData.images.length,
-                      controller: _pageController,
-                      scrollDirection: Axis.horizontal,
-                      onPageChanged: (value) => currentPage = value,
-                      itemBuilder: (context, index) {
-                        return ListView(
-                          padding: const EdgeInsets.symmetric(horizontal: 55),
-                          controller: ScrollController(),
-                          children: [
-                            Text(
-                              MainData.titles[index],
-                              style: GoogleFonts.outfit(
-                                fontWeight: FontWeight.w600,
-                                fontSize: width * 0.04,
-                              ),
-                              textAlign: TextAlign.center,
+                SizedBox(
+                  height: 450,
+                  child: PageView.builder(
+                    itemCount: MainData.images.length,
+                    controller: _pageController,
+                    scrollDirection: Axis.horizontal,
+                    onPageChanged: (value) => currentPage = value,
+                    itemBuilder: (context, index) {
+                      return ListView(
+                        padding: const EdgeInsets.symmetric(horizontal: 55),
+                        controller: ScrollController(),
+                        children: [
+                          Text(
+                            MainData.titles[index],
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w600,
+                              fontSize: width * 0.04,
                             ),
-                            Container(
-                              width: width * 0.6,
-                              height: 200,
-                              decoration: BoxDecoration(
-                                image: DecorationImage(
-                                  image: AssetImage(MainData.images[index]),
-                                  fit: BoxFit.contain,
-                                ),
+                            textAlign: TextAlign.center,
+                          ),
+                          Container(
+                            width: width * 0.6,
+                            height: 200,
+                            decoration: BoxDecoration(
+                              image: DecorationImage(
+                                image: AssetImage(MainData.images[index]),
+                                fit: BoxFit.contain,
                               ),
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: width * 0.2,
-                              ),
-                              child: CustomAppButton(
-                                onPressed: () {
-                                  showDialog(
-                                    context: context,
-                                    builder: (context) {
-                                      return PhoneAddClientForm();
-                                    },
-                                  );
-                                },
-                                text: "S'abonner",
-                              ),
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: width * 0.2,
                             ),
-                            const Gap(20),
-                            Text(
-                              MainData.desc[index],
-                              style: GoogleFonts.outfit(
-                                fontWeight: FontWeight.w300,
-                                fontSize: 13,
-                              ),
-                              textAlign: TextAlign.center,
+                            child: CustomAppButton(
+                              onPressed: () {
+                                showDialog(
+                                  context: context,
+                                  builder: (context) {
+                                    return PhoneAddClientForm();
+                                  },
+                                );
+                              },
+                              text: "S'abonner",
                             ),
-                            const Gap(20),
-                            socialmediaView(context),
-                          ],
-                        );
-                      },
-                    ),
+                          ),
+                          const Gap(20),
+                          Text(
+                            MainData.desc[index],
+                            style: GoogleFonts.outfit(
+                              fontWeight: FontWeight.w300,
+                              fontSize: 13,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                          const Gap(20),
+                          socialmediaView(context),
+                        ],
+                      );
+                    },
                   ),
                 ),
               ],
