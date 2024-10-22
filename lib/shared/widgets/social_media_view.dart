@@ -28,7 +28,7 @@ Widget socialmediaView(
           icon: HugeIcons.strokeRoundedInstagram,
         ),
         SocialMediaIcon(
-          url: 'https://web.facebook.com/profile.php?id=100086256423455',
+          url: 'https://www.facebook.com/charking.mihigo',
           icon: HugeIcons.strokeRoundedFacebook02,
         ),
         SocialMediaIcon(
