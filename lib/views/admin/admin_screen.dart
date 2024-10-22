@@ -36,7 +36,7 @@ class _AdminScreenState extends State<AdminScreen> {
                           MyAppBar(isOnAdmin: true),
                           const Gap(10),
                           Text(
-                            "DashBoard",
+                            "Tableau de Bord",
                             style: GoogleFonts.abrilFatface(
                               fontWeight: FontWeight.bold,
                               letterSpacing: 1.5,
