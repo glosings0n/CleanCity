@@ -6,7 +6,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 
 class AddTeamForm extends StatefulWidget {
   const AddTeamForm({
@@ -109,7 +109,7 @@ class _AddTeamFormState extends State<AddTeamForm> {
                         try {
                           registeringStarted();
                           if (!widget.forAddTeamMember) {
-                            await DBServices.addTeam(
+                            await TeamsServices.addTeam(
                               TeamModel(
                                 chiefEmail: emailController.text.trim(),
                                 teamEmails: [],
@@ -123,7 +123,7 @@ class _AddTeamFormState extends State<AddTeamForm> {
                           } else {
                             widget.membersList!
                                 .add(emailController.text.trim());
-                            await DBServices.addTeamMember(
+                            await TeamsServices.addTeamMember(
                               widget.teamID!,
                               widget.membersList!,
                             );
@@ -260,7 +260,7 @@ class _PhoneAddTeamFormState extends State<PhoneAddTeamForm> {
                         try {
                           registeringStarted();
                           if (!widget.forAddTeamMember) {
-                            await DBServices.addTeam(
+                            await TeamsServices.addTeam(
                               TeamModel(
                                 chiefEmail: emailController.text.trim(),
                                 teamEmails: [],
@@ -274,7 +274,7 @@ class _PhoneAddTeamFormState extends State<PhoneAddTeamForm> {
                           } else {
                             widget.membersList!
                                 .add(emailController.text.trim());
-                            await DBServices.addTeamMember(
+                            await TeamsServices.addTeamMember(
                               widget.teamID!,
                               widget.membersList!,
                             );

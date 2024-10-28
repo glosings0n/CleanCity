@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 import 'add_team_form.dart';
 
 class TeamsList extends StatefulWidget {
@@ -23,7 +23,7 @@ class _TeamsListState extends State<TeamsList> {
   @override
   void initState() {
     super.initState();
-    teamsStream = DBServices.getTeams();
+    teamsStream = TeamsServices.getTeams();
   }
 
   @override
@@ -208,7 +208,7 @@ class _TeamsListState extends State<TeamsList> {
                                                       IconButton(
                                                         onPressed: () async {
                                                           bool deleted =
-                                                              await DBServices
+                                                              await TeamsServices
                                                                   .deleteTeam(
                                                                       datas[index]
                                                                           .id!);
@@ -277,7 +277,7 @@ class _TeamsListState extends State<TeamsList> {
                                               IconButton(
                                                 onPressed: () async {
                                                   bool deleted =
-                                                      await DBServices
+                                                      await TeamsServices
                                                           .deleteTeam(
                                                               datas[index].id!);
                                                   setState(() {});

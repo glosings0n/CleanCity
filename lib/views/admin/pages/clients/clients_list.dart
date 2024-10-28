@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 
 class ClientsList extends StatefulWidget {
   const ClientsList({super.key});
@@ -22,7 +22,7 @@ class _ClientsListState extends State<ClientsList> {
   @override
   void initState() {
     super.initState();
-    clientssStream = DBServices.getClients();
+    clientssStream = ClientsServices.getClients();
   }
 
   @override
@@ -209,7 +209,7 @@ class _ClientsListState extends State<ClientsList> {
                                                       IconButton(
                                                         onPressed: () async {
                                                           bool deleted =
-                                                              await DBServices
+                                                              await ClientsServices
                                                                   .deleteClient(
                                                                       datas[index]
                                                                           .email);
@@ -288,7 +288,7 @@ class _ClientsListState extends State<ClientsList> {
                                               IconButton(
                                                 onPressed: () async {
                                                   bool deleted =
-                                                      await DBServices
+                                                      await ClientsServices
                                                           .deleteClient(
                                                               datas[index]
                                                                   .email);

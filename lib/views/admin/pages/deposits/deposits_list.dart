@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 import 'add_deposits_form.dart';
 
 class DepositsList extends StatefulWidget {
@@ -23,7 +23,7 @@ class _DepositsListState extends State<DepositsList> {
   @override
   void initState() {
     super.initState();
-    depositsStream = DBServices.getDepots();
+    depositsStream = DepositsServices.getDepots();
   }
 
   @override
@@ -185,7 +185,7 @@ class _DepositsListState extends State<DepositsList> {
                                                       IconButton(
                                                         onPressed: () async {
                                                           bool deleted =
-                                                              await DBServices
+                                                              await DepositsServices
                                                                   .deleteDepot(
                                                                       datas[index]
                                                                           .id!);
@@ -253,7 +253,7 @@ class _DepositsListState extends State<DepositsList> {
                                               IconButton(
                                                 onPressed: () async {
                                                   bool deleted =
-                                                      await DBServices
+                                                      await DepositsServices
                                                           .deleteDepot(
                                                               datas[index].id!);
                                                   setState(() {});

@@ -6,7 +6,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 
 class AddEmployerForm extends StatefulWidget {
   const AddEmployerForm({
@@ -145,7 +145,7 @@ class _AddEmployerFormState extends State<AddEmployerForm> {
                         try {
                           registeringStarted();
                           if (widget.initialValues == null) {
-                            await DBServices.addEmployers(
+                            await EmployersServices.addEmployers(
                               EmployerModel(
                                 nom: nomCtr.text.trim(),
                                 prenom: prenomCtr.text.trim(),
@@ -161,7 +161,7 @@ class _AddEmployerFormState extends State<AddEmployerForm> {
                             );
                             setState(() {});
                           } else {
-                            await DBServices.updateEmployer(
+                            await EmployersServices.updateEmployer(
                               EmployerModel(
                                 prenom: widget.initialValues![0],
                                 nom: widget.initialValues![1],
@@ -341,7 +341,7 @@ class _PhoneAddEmployerFormState extends State<PhoneAddEmployerForm> {
                         try {
                           registeringStarted();
                           if (widget.initialValues == null) {
-                            await DBServices.addEmployers(
+                            await EmployersServices.addEmployers(
                               EmployerModel(
                                 nom: nomCtr.text.trim(),
                                 prenom: prenomCtr.text.trim(),
@@ -357,7 +357,7 @@ class _PhoneAddEmployerFormState extends State<PhoneAddEmployerForm> {
                             );
                             setState(() {});
                           } else {
-                            await DBServices.updateEmployer(
+                            await EmployersServices.updateEmployer(
                               EmployerModel(
                                 prenom: widget.initialValues![0],
                                 nom: widget.initialValues![1],

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:hugeicons/hugeicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 import '../../../../shared/shared.dart';
 
 class AddClientForm extends StatefulWidget {
@@ -151,7 +151,7 @@ class _AddClientFormState extends State<AddClientForm> {
                         try {
                           registeringStarted();
                           if (widget.initialValues == null) {
-                            await DBServices.addClient(
+                            await ClientsServices.addClient(
                               ClientModel(
                                 nom: nomCtr.text.trim(),
                                 postnom: postnomCtr.text.trim(),
@@ -174,7 +174,7 @@ class _AddClientFormState extends State<AddClientForm> {
                                   );
                             setState(() {});
                           } else {
-                            await DBServices.updateClient(
+                            await ClientsServices.updateClient(
                               ClientModel(
                                 nom: widget.initialValues![0],
                                 postnom: widget.initialValues![1],
@@ -362,7 +362,7 @@ class _PhoneAddClientFormState extends State<PhoneAddClientForm> {
                         try {
                           registeringStarted();
                           if (widget.initialValues == null) {
-                            await DBServices.addClient(
+                            await ClientsServices.addClient(
                               ClientModel(
                                 nom: nomCtr.text.trim(),
                                 postnom: postnomCtr.text.trim(),
@@ -385,7 +385,7 @@ class _PhoneAddClientFormState extends State<PhoneAddClientForm> {
                                   );
                             setState(() {});
                           } else {
-                            await DBServices.updateClient(
+                            await ClientsServices.updateClient(
                               ClientModel(
                                 nom: widget.initialValues![0],
                                 postnom: widget.initialValues![1],

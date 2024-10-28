@@ -6,7 +6,7 @@ import 'package:hugeicons/hugeicons.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 
 class AddDepositForm extends StatefulWidget {
   const AddDepositForm({super.key, this.initialValues});
@@ -150,7 +150,7 @@ class _AddDepositFormState extends State<AddDepositForm> {
                         try {
                           registeringStarted();
                           if (widget.initialValues == null) {
-                            await DBServices.addDepot(
+                            await DepositsServices.addDepot(
                               DepotModel(
                                 localisation: locationController.text.trim(),
                                 capacity: capacityController.text.trim(),
@@ -162,7 +162,7 @@ class _AddDepositFormState extends State<AddDepositForm> {
                             );
                             setState(() {});
                           } else {
-                            await DBServices.updateDepot(
+                            await DepositsServices.updateDepot(
                               DepotModel(
                                 id: widget.initialValues![0],
                                 localisation: widget.initialValues![1],
@@ -344,7 +344,7 @@ class _PhoneAddDepositFormState extends State<PhoneAddDepositForm> {
                         try {
                           registeringStarted();
                           if (widget.initialValues == null) {
-                            await DBServices.addDepot(
+                            await DepositsServices.addDepot(
                               DepotModel(
                                 localisation: locationController.text.trim(),
                                 capacity: capacityController.text.trim(),
@@ -356,7 +356,7 @@ class _PhoneAddDepositFormState extends State<PhoneAddDepositForm> {
                             );
                             setState(() {});
                           } else {
-                            await DBServices.updateDepot(
+                            await DepositsServices.updateDepot(
                               DepotModel(
                                 id: widget.initialValues![0],
                                 localisation: widget.initialValues![1],

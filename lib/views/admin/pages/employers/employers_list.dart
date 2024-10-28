@@ -7,7 +7,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 import '../../../../shared/shared.dart';
-import '../../../../db/db.dart';
+import '../../../../data/data.dart';
 import 'add_employer_form.dart';
 
 class EmployersList extends StatefulWidget {
@@ -23,7 +23,7 @@ class _EmployersListState extends State<EmployersList> {
   @override
   void initState() {
     super.initState();
-    employersStream = DBServices.getEmployers();
+    employersStream = EmployersServices.getEmployers();
   }
 
   @override
@@ -200,7 +200,7 @@ class _EmployersListState extends State<EmployersList> {
                                                       IconButton(
                                                         onPressed: () async {
                                                           bool deleted =
-                                                              await DBServices
+                                                              await EmployersServices
                                                                   .deleteEmployer(
                                                                       datas[index]
                                                                           .email);
@@ -275,7 +275,7 @@ class _EmployersListState extends State<EmployersList> {
                                               IconButton(
                                                 onPressed: () async {
                                                   bool deleted =
-                                                      await DBServices
+                                                      await EmployersServices
                                                           .deleteEmployer(
                                                               datas[index]
                                                                   .email);
