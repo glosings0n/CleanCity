@@ -19,7 +19,6 @@ class _PhoneViewState extends State<PhoneView> {
   final PageController _pageController = PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.sizeOf(context).width;
     return Expanded(
       child: Column(
         children: [
@@ -30,14 +29,14 @@ class _PhoneViewState extends State<PhoneView> {
                   "Avec nous,\nsoyez des défenseurs\nde l'environnement!",
                   style: GoogleFonts.abrilFatface(
                     fontWeight: FontWeight.bold,
-                    fontSize: width * 0.05,
                     letterSpacing: 1.5,
+                    fontSize: 25,
                   ),
                   textAlign: TextAlign.center,
                 ),
                 const Gap(10),
                 SizedBox(
-                  height: 450,
+                  height: 440,
                   child: PageView.builder(
                     itemCount: MainData.images.length,
                     controller: _pageController,
@@ -52,12 +51,12 @@ class _PhoneViewState extends State<PhoneView> {
                             MainData.titles[index],
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w600,
-                              fontSize: width * 0.04,
+                              fontSize: 20,
                             ),
                             textAlign: TextAlign.center,
                           ),
                           Container(
-                            width: width * 0.6,
+                            width: 200,
                             height: 200,
                             decoration: BoxDecoration(
                               image: DecorationImage(
@@ -67,9 +66,7 @@ class _PhoneViewState extends State<PhoneView> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: width * 0.2,
-                            ),
+                            padding: EdgeInsets.symmetric(horizontal: 80),
                             child: CustomAppButton(
                               onPressed: () {
                                 showDialog(
@@ -87,12 +84,10 @@ class _PhoneViewState extends State<PhoneView> {
                             MainData.desc[index],
                             style: GoogleFonts.outfit(
                               fontWeight: FontWeight.w300,
-                              fontSize: 13,
+                              fontSize: 14,
                             ),
                             textAlign: TextAlign.center,
                           ),
-                          const Gap(20),
-                          socialmediaView(context),
                         ],
                       );
                     },
@@ -115,11 +110,7 @@ class _PhoneViewState extends State<PhoneView> {
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(
-              left: 20,
-              right: 20,
-              bottom: 10,
-            ),
+            padding: const EdgeInsets.all(20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -142,6 +133,7 @@ class _PhoneViewState extends State<PhoneView> {
                     child: Icon(HugeIcons.strokeRoundedArrowLeft02),
                   ),
                 ),
+                socialmediaView(context),
                 GestureDetector(
                   onTap: () {
                     _pageController.animateToPage(

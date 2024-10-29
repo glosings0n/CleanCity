@@ -7,10 +7,13 @@ class CustomAppButton extends StatelessWidget {
     super.key,
     required this.text,
     required this.onPressed,
+    this.customWidth,
+    this.customHeight,
   });
 
   final VoidCallback onPressed;
   final String text;
+  final double? customWidth, customHeight;
 
   @override
   Widget build(BuildContext context) {
@@ -27,8 +30,8 @@ class CustomAppButton extends StatelessWidget {
         ),
         fixedSize: WidgetStatePropertyAll(
           AppAdaptability.isDesktop(context)
-              ? Size(width * 0.17, width * 0.035)
-              : Size(width * 0.3, width * 0.07),
+              ? Size(customWidth ?? width * 0.17, customHeight ?? width * 0.035)
+              : Size(customWidth ?? width * 0.3, customHeight ?? 40),
         ),
         foregroundColor: WidgetStatePropertyAll(
           Colors.black,
@@ -37,8 +40,9 @@ class CustomAppButton extends StatelessWidget {
       child: Text(
         text,
         style: GoogleFonts.outfit(
-          fontWeight: FontWeight.bold,
+          fontWeight: FontWeight.w500,
           letterSpacing: 1.3,
+          fontSize: 16,
         ),
       ),
     );
