@@ -30,7 +30,7 @@ class MainApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        '/': (context) => const SignInDialogView(),
+        '/': (context) => const MainPageView(),
         '/admin': (context) => const AdminScreen(),
         '/clients': (context) => const ClientsList(),
         '/employers': (context) => const EmployersList(),
